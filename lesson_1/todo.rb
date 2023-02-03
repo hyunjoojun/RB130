@@ -123,13 +123,13 @@ class TodoList
   end
 
   def select
-    results = []
+    list = TodoList.new(title)
     counter = 0
     while counter < size
-      results << @todos[counter] if yield(@todos[counter])
+      list.add(@todos[counter]) if yield(@todos[counter])
       counter += 1
     end
-    results
+    list
   end
 
   private
