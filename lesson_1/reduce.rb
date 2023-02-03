@@ -4,7 +4,7 @@ def reduce(array, default=0)
           default
         elsif array.first.class == String
           ''
-        else
+        elsif array.first.class == Array
           []
         end
 
