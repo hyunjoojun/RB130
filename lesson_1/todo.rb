@@ -122,6 +122,16 @@ class TodoList
     end
   end
 
+  def select
+    results = []
+    counter = 0
+    while counter < size
+      results << @todos[counter] if yield(@todos[counter])
+      counter += 1
+    end
+    results
+  end
+
   private
 
   def valid_index?(index)
@@ -138,6 +148,8 @@ list.add(todo1)
 list.add(todo2)
 list.add(todo3)
 
-list.each do |todo|
-  puts todo                   # calls Todo#to_s
-end
+todo1.done!
+
+results = list.select { |todo| todo.done? }    # you need to implement this method
+
+puts results.inspect
