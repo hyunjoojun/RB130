@@ -5,7 +5,6 @@ Minitest::Reporters.use!
 require_relative 'todolist'
 
 class TodoListTest < MiniTest::Test
-
   def setup
     @todo1 = Todo.new("Buy milk")
     @todo2 = Todo.new("Clean room")
@@ -105,5 +104,48 @@ class TodoListTest < MiniTest::Test
     assert_raises(IndexError) { @list.remove_at(50) }
     @list.remove_at(2)
     assert_equal([@todo1, @todo2], @list.to_a)
+  end
+
+  def test_to_s
+    output = <<-OUTPUT.chomp.gsub /^\s+/, ""
+    ---- Today's Todos ----
+    [ ] Buy milk
+    [ ] Clean room
+    [ ] Go to gym
+    OUTPUT
+
+    assert_equal(output, @list.to_s)
+  end
+
+  def test_to_s_marked
+    output = <<-OUTPUT.chomp.gsub /^\s+/, ""
+    ---- Today's Todos ----
+    [X] Buy milk
+    [X] Clean room
+    [X] Go to gym
+    OUTPUT
+
+    @list.done!
+    assert_equal(output, @list.to_s)
+  end
+
+  def test_each
+    result = []
+    @list.each { |todo| result << todo }
+    assert_equal([@todo1, @todo2, @todo3], result)
+  end
+
+  def test_each_returns_original_list
+    result = @list.each { |todo| nil }
+    assert_equal(@list, result)
+  end
+
+  def test_select
+    @todo1.done!
+    list = TodoList.new(@list.title)
+    list.add(@todo1)
+
+    assert_equal(list.title, @list.title)
+    assert_equal(list.to_s, @list.select{ |todo| todo.done? }.to_s)
   end
 end
