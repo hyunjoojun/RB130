@@ -1,10 +1,12 @@
 require 'minitest/autorun'
+require "minitest/reporters"
+Minitest::Reporters.use!
 
 require_relative 'car'
 
-class CarTest < MiniTest::Test
-  def test_wheels
+describe 'Car#wheels' do
+  it 'has 4 wheels' do
     car = Car.new
-    assert_equal(4, car.wheels)
+    _(car.wheels).must_equal 4
   end
 end
