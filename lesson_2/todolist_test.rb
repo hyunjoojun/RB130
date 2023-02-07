@@ -23,6 +23,11 @@ class TodoListTest < MiniTest::Test
     assert_equal(@todos, @list.to_a)
   end
 
+  def test_add_raise_error
+    assert_raises(TypeError) { @list.add(1) }
+    assert_raises(TypeError) { @list.add('hi')}
+  end
+
   def test_size
     assert_equal(3, @list.size)
   end
@@ -119,7 +124,19 @@ class TodoListTest < MiniTest::Test
     assert_equal(output, @list.to_s)
   end
 
-  def test_to_s_marked
+  def test_to_s_mark_one
+    output = <<-OUTPUT.chomp.gsub /^\s+/, ""
+    ---- Today's Todos ----
+    [ ] Buy milk
+    [X] Clean room
+    [ ] Go to gym
+    OUTPUT
+
+    @list.mark_done_at(1)
+    assert_equal(output, @list.to_s)
+  end
+
+  def test_to_s_marked_all
     output = <<-OUTPUT.chomp.gsub /^\s+/, ""
     ---- Today's Todos ----
     [X] Buy milk
