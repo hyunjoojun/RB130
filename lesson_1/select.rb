@@ -11,6 +11,12 @@ def select(array)
   new_arr
 end
 
+# def select2(arr)
+#   result = []
+#   arr.each { |ele| result << ele if yield(ele) }
+#   result
+# end
+
 array = [1, 2, 3, 4, 5]
 
 p select(array) { |num| num.odd? }      # => [1, 3, 5]
