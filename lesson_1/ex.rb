@@ -1,7 +1,18 @@
-def reduce(array, acc=0)
-  array.each do |ele|
+# def reduce(array, acc=0)
+#   array.each do |ele|
+#     acc = yield(acc, ele)
+#   end
+#   acc
+# end
+
+def reduce(*arg)
+  acc = 0
+  acc = arg.last if arg.last.instance_of?(Integer)
+
+  arg.first.each do |ele|
     acc = yield(acc, ele)
   end
+
   acc
 end
 

@@ -42,7 +42,7 @@ class TodoList
   end
 
   def <<(todo)
-    if todo.class == Todo
+    if todo.instance_of?(Todo)
       @todos << todo
     else
       puts 'Can only add Todo objects'
