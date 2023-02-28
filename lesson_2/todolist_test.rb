@@ -154,6 +154,11 @@ class TodoListTest < MiniTest::Test
     assert_equal([@todo1, @todo2, @todo3], result)
   end
 
+  def test_each2
+    @list.each { |todo| todo.done! }
+    assert_equal(true, @list.done?)
+  end
+
   def test_each_returns_original_list
     result = @list.each { |todo| nil }
     assert_equal(@list, result)
@@ -166,5 +171,13 @@ class TodoListTest < MiniTest::Test
 
     assert_equal(list.title, @list.title)
     assert_equal(list.to_s, @list.select{ |todo| todo.done? }.to_s)
+  end
+
+  def test_select2
+    new_list = TodoList.new(@list.title)
+    new_list.add(@todo1)
+
+    actual_list = @list.select { |todo| todo.title == 'Buy milk' }
+    assert_equal(new_list.to_s, actual_list.to_s)
   end
 end
